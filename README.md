@@ -50,6 +50,7 @@ Add  to your `config/services.php`:
     'secret' => env('AWSSMS_SECRET'),
     'region' => env('AWSSMS_REGION'),
     'from' => env('AWSSMS_FROM'), // optional
+    'max_price_usd' => '0.50' // Max price, sms wont send if price of the sms is more then this.
 ],
 ...
 ```

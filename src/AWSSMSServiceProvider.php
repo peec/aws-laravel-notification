@@ -33,7 +33,8 @@ class AWSSMSServiceProvider extends ServiceProvider
 
                 return new AWSSMS(
                     $client,
-                    $config['from']
+                    $config['from'],
+                    isset($config['max_price_usd']) ? $config['max_price_usd'] : '0.50'
                 );
             });
 
