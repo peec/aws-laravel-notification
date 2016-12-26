@@ -19,15 +19,20 @@ class AWSSMSServiceProvider extends ServiceProvider
             ->needs(AWSSMS::class)
             ->give(function () {
                 $config = $this->app['config']['services.awssms'];
+
+                $params = [
+                    'credentials' => array(
+                        'key' => $config['key'],
+                        'secret' => $config['secret'],
+                    ),
+                    'region' => $config['region'], // < your aws from SNS Topic region
+                    'version' => 'latest'
+                ];
+
+                $client = new \Aws\Sns\SnsClient($params);
+
                 return new AWSSMS(
-                    $this->app->make(\Aws\Sns\SnsClient::class, [
-                        'credentials' => array(
-                            'key' => $config['key'],
-                            'secret' => $config['secret'],
-                        ),
-                        'region' => $config['region'], // < your aws from SNS Topic region
-                        'version' => 'latest'
-                    ]),
+                    $client,
                     $config['from']
                 );
             });
